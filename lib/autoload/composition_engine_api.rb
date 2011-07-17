@@ -14,7 +14,11 @@ module CompositionEngineApi
     end
 
     def call_override
-      [200,{'Content-Type' => 'text/plain'},[CGI.escape_html(env.inspect)]]
+      if env['PATH_INFO'] =~ /^\/api(\/.*)?$/
+        [200,{'Content-Type' => 'text/plain'},[self.env.keys.map{|k| "#{k.inspect}: #{self.env[k].inspect}"}.join("\n")]]
+      else
+        nil
+      end
     end
 
     class LoginManager
