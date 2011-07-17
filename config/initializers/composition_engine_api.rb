@@ -1,0 +1,1 @@
+CompositionEngine::Application.config.middleware.insert_before ActionDispatch::Flash, CompositionEngineApi::Middleware
