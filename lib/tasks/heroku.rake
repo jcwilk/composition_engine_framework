@@ -9,11 +9,24 @@ namespace :heroku do
   task :push do
     ensure_logged_into_heroku
     ensure_git_configured_for_heroku
-    puts run_command_safe(Escape.shell_command(['git','push','heroku','master']))
+    output = `#{Escape.shell_command(['git','push','heroku','master'])}`
+    if !output.scan(/Permission denied (publickey)\./).empty?
+      raise <<ERROR
+Heroku permission denied, publickey failed to authenticate.
+Try running 'rake heroku:add_publickey'
+ERROR
+    else
+      puts output
+    end
+  end
+
+  desc 'add your publickey to heroku'
+  task :add_publickey do
+    puts `heroku keys:add ~/.ssh/id_rsa.pub`
   end
 
   def ensure_logged_into_heroku
-    if !`heroku info < /dev/null`.scan(/Enter your Heroku credentials\./).blank?
+    if !`heroku info < /dev/null`.scan(/Enter your Heroku credentials\./).empty?
       raise <<ERROR
 You are not logged into heroku.
 Please run 'heroku login'
