@@ -1,0 +1,27 @@
+This is a draft of an engine (or, perhaps at this point more specifically, a poc skeleton) for a game server that can freely export and import player controlled characters between its server and other servers, on the fly, if they're running the same engine. To save time, here's a copied and pasted brain dump to stand in for more thorough details. This is all very much a work in progress being played by ear. Note that the gameplay descriptions are less important than the ways servers talk to each other, since, by design, that should all be replacable by the individual server developer(s).
+
+
+
+----------------------------------------
+Starting with a block or a node or a small room that is by itself in the void but that can be expanded indefinitely in any direction, perhaps by placing blocks down one by one or maybe something more interesting (organic growth stimulated by players somehow? not sure) is the general idea... And there could be an interesting element of direction by making it so if you walk off the edge of a block, your perspective "shifts" as you walk over the corner and gravity "changes" so that the new face of the block you were on is now the floor. That way if you wanted to walk up a wall you could just walk into it and then be walking up it after the shift. I'd think the shift would deserve some cool special effect to make it kind of fluid and intuitive what's going on, but a full blown 3d rotation would probably be overkill/unreasonable.
+
+So that's all fine, but not a particularly interesting game yet. The cool part is that it would be open source and packaged up so that you fork it from github, run a raketask to create a heroku app for it and deploy, and then that person's own instance of the game is running on "their" heroku slug. The idea is that each game server would be able to connect to one or more other game servers in an ad-hoc decentralized manner, and there would be "portals" that would take you from one game server to another. When you stepped through the portal, it would make some api call to the server you're going to, sending your character information and inventory, and then it would redirect you to that server's web address. Worlds could be extended via programming to have special objects and behavior, but when you bring those objects into other worlds they're tagged as originally from world X and may have no behavior in world Y except as a placeholder token. When you go back to world X the item would then have it's normal behavior. World Y could implement the behavior of world X's objects if it wanted, and then world X's objects would behave as real objects in world Y as well. You could also trade world X objects in world Y regardless of whether they had behavior implemented... For example...
+
+Bob lives in world X and has a World-X-Sword
+Bob goes to world Y and meets Alice from world Y, in world Y
+Bob trades with Alice and gives her a World-X-Sword
+Alice can't do anything with the sword right now, as world Y hasn't implemented world X's sword object
+Alice feels like visiting world X so she steps through the portal to Bob's homeworld
+Alice's World-X-Sword token is now a real sword she can use while still in world X, afterwards it will go back to being a "token"
+
+
+There's a couple technical difficulties with this idea... Here are the main ones:
+
+    Ad-hoc servers discover each other without a centralized database?
+    Worlds be programmably extendable, yet still have a consistent enough API to be able to understand each other for character imports/exports?
+    Avoid characters being duplicated or lost with no centralized server and by having them get passed around from server to server?
+    Avoid items being forged or duplicated?
+
+There's a lot of other interesting questions like where the items come from... But I think the fun part is that each server could figure that out for itself. Maybe some would give you items dropped by mobs you kill, maybe another would be a puzzle server where you have to solve things to find items, maybe something as crazy as another being a super mario brothers clone where you get items after you beat each level, who knows. Could be really cool to go from server to server with the same character, same items, but have each server be totally different, whether it's as small a difference as texturing/level layout, or as big as totally different uis.
+
+Thoughts/ideas? Obviously a pretty huge scope, but there's a lot of smaller chunks of it that are still interesting in and of themselves.
