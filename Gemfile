@@ -6,6 +6,7 @@ gem 'heroku'
 gem 'pg'
 gem 'uuidtools'
 gem 'hashie'
+gem 'composition_engine', '0.0.0'
 
 group :production do
   gem 'pg'
