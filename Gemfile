@@ -6,7 +6,7 @@ gem 'heroku'
 gem 'pg'
 gem 'uuidtools'
 gem 'hashie'
-gem 'composition_engine', '0.0.0'
+gem 'composition_engine', '0.0.0' # :path => '/home/<username>/<path_to_checked_out_gem>' #for when you want to do gem development
 
 group :production do
   gem 'pg'
