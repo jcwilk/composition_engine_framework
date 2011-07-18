@@ -34,17 +34,15 @@ module CompositionEngine
     end
 
     def call_override
-      needs_login = LoginHandler.force_login(env)
-
       case scoped_path
         when false
-          return needs_login
+          LoginHandler.force_login(env)
         when '/inspect'
           [200,{'Content-Type' => 'text/plain'},[self.env.keys.map{|k| "#{k.inspect}: #{self.env[k].inspect}"}.join("\n")]]
         when /^#{LoginHandler.resource_path}/
           LoginHandler.handle(env)
         else
-          return [404,{'ContentType' => 'text/plain'},['Not Found']]
+          [404,{'ContentType' => 'text/plain'},['Not Found']]
       end
     end
 
