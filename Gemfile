@@ -4,6 +4,8 @@ gem 'rails'
 gem 'escape'
 gem 'heroku'
 gem 'pg'
+gem 'uuidtools'
+gem 'hashie'
 
 group :production do
   gem 'pg'

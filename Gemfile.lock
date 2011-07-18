@@ -33,6 +33,7 @@ GEM
     erubis (2.6.6)
       abstract (>= 1.0.0)
     escape (0.0.4)
+    hashie (1.0.0)
     heroku (2.3.6)
       launchy (>= 0.3.2)
       rest-client (~> 1.6.1)
@@ -76,13 +77,16 @@ GEM
     treetop (1.4.9)
       polyglot (>= 0.3.1)
     tzinfo (0.3.29)
+    uuidtools (2.1.2)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
   escape
+  hashie
   heroku
   pg
   rails
   sqlite3
+  uuidtools

@@ -4,4 +4,4 @@
 require File.expand_path('../config/application', __FILE__)
 require 'rake'
 
-CompositionEngine::Application.load_tasks
+CompositionEngineFramework::Application.load_tasks
