@@ -36,7 +36,7 @@ module CompositionEngine
     def call_override
       case scoped_path
         when false
-          LoginHandler.force_login(env)
+          LoginHandler.force_login(env) #This returns false and defaults control to the next middleware if they're already logged in
         when '/inspect'
           [200,{'Content-Type' => 'text/plain'},[self.env.keys.map{|k| "#{k.inspect}: #{self.env[k].inspect}"}.join("\n")]]
         when /^#{LoginHandler.resource_path}/
@@ -98,7 +98,7 @@ module CompositionEngine
     #{"<em>#{message}</em>" if message}
     <p>Select a handle and click Login</p>
     <form action='#{self.class.prefixed_path}' method='POST'>
-      Handle: <input type='text' name='login[nickname]' />
+      <label for='login_nickname'>Nickname: </label><input type='text' name='login[nickname]' id='login_nickname'/>
       <input type='submit' value='Login' />
     </form>
   </body>
@@ -110,7 +110,7 @@ HTML
     def create_login
       nickname = params['login']['nickname']
       if nickname.nil? || nickname.empty?
-        new_login("Handle must not be blank!")
+        new_login("Nickname must not be blank!")
       else
         user = ::CompositionEngine::User.new(:nickname => nickname, :uuid => UUIDTools::UUID.random_create)
         ::CompositionEngine.assign_user_to_session(session,user)
